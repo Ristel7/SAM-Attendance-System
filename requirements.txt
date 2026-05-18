@@ -1,0 +1,1 @@
+now i want that the dashboard pages show all students from  database and with their all info and there should be a 2 particular button for present and abscent for all students and after that there will me a manage button for all by clicking on it teacher will able to add or remove students

@@ -1,0 +1,500 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAM Attendance System</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/icon.png') }}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            overflow-x: hidden;
+            background: #020617;
+            color: white;
+        }
+
+        /* NAVBAR */
+
+        nav {
+            width: 100%;
+            height: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 70px;
+
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+
+            background: linear-gradient(to right, #38bdf8, #818cf8, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #38bdf8;
+        }
+
+        .login-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(to right, #2563eb, #7c3aed);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+
+            transition: 0.4s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.5);
+        }
+
+        /* HERO SECTION */
+
+        .hero {
+            width: 100%;
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 140px 90px 60px;
+
+            position: relative;
+        }
+
+        /* GLOW EFFECTS */
+
+        .blur {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.35;
+        }
+
+        .blur1 {
+            width: 350px;
+            height: 350px;
+            background: #2563eb;
+            top: 100px;
+            left: -100px;
+        }
+
+        .blur2 {
+            width: 300px;
+            height: 300px;
+            background: #ec4899;
+            bottom: 0;
+            right: 0;
+        }
+
+        /* LEFT CONTENT */
+
+        .hero-left {
+            width: 50%;
+            z-index: 2;
+        }
+
+        .tag {
+            width: max-content;
+            padding: 10px 18px;
+
+            background: rgba(255, 255, 255, 0.08);
+
+            border: 1px solid rgba(255, 255, 255, 0.1);
+
+            border-radius: 30px;
+
+            margin-bottom: 25px;
+
+            color: #38bdf8;
+        }
+
+        .hero-left h1 {
+            font-size: 70px;
+            line-height: 1.1;
+            margin-bottom: 25px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, #38bdf8, #818cf8, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-left p {
+            color: #cbd5e1;
+            line-height: 1.8;
+            font-size: 18px;
+            margin-bottom: 35px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .primary-btn,
+        .secondary-btn {
+            padding: 16px 30px;
+            border: none;
+            border-radius: 14px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.4s;
+        }
+
+        .primary-btn {
+            background: linear-gradient(to right, #2563eb, #7c3aed);
+            color: white;
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(37, 99, 235, 0.5);
+        }
+
+        .secondary-btn {
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .secondary-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* RIGHT IMAGE SECTION */
+
+        .hero-right {
+            width: 45%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            position: relative;
+            z-index: 2;
+        }
+
+        .image-card {
+            width: 480px;
+            height: 520px;
+
+            border-radius: 35px;
+
+            background: rgba(255, 255, 255, 0.08);
+
+            backdrop-filter: blur(20px);
+
+            border: 1px solid rgba(255, 255, 255, 0.1);
+
+            overflow: hidden;
+
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+
+            position: relative;
+        }
+
+        /* ADD YOUR IMAGE HERE */
+
+        .image-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .image-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 30px;
+
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+        }
+
+        .image-overlay h3 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .image-overlay p {
+            color: #cbd5e1;
+        }
+
+        /* STATS SECTION */
+
+        .stats {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+
+            padding: 40px 80px 100px;
+
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            width: 250px;
+            padding: 35px;
+
+            background: rgba(255, 255, 255, 0.06);
+
+            border: 1px solid rgba(255, 255, 255, 0.08);
+
+            border-radius: 25px;
+
+            text-align: center;
+
+            transition: 0.4s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .stat-card h2 {
+            font-size: 45px;
+
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            margin-bottom: 10px;
+        }
+
+        .stat-card p {
+            color: #cbd5e1;
+        }
+
+        /* FOOTER */
+
+        footer {
+            width: 100%;
+            text-align: center;
+            padding: 30px;
+
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+            color: #94a3b8;
+        }
+
+        /* RESPONSIVE */
+
+        @media(max-width:1100px) {
+
+            .hero {
+                flex-direction: column;
+                gap: 60px;
+                text-align: center;
+            }
+
+            .hero-left,
+            .hero-right {
+                width: 100%;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .tag {
+                margin: auto auto 25px;
+            }
+
+            .hero-left h1 {
+                font-size: 55px;
+            }
+
+        }
+
+        @media(max-width:700px) {
+
+            nav {
+                padding: 0 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 140px 25px 50px;
+            }
+
+            .hero-left h1 {
+                font-size: 42px;
+            }
+
+            .image-card {
+                width: 100%;
+                height: 420px;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav>
+
+        <div class="logo">
+            SAM Attendance
+        </div>
+
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Dashboard</a>
+            <a href="#">Reports</a>
+            <a href="/students">Students</a>
+        </div>
+
+        <a href="/login">
+            <button class="login-btn">
+                Teacher Login
+            </button>
+        </a>
+
+    </nav>
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="blur blur1"></div>
+        <div class="blur blur2"></div>
+
+        <div class="hero-left">
+
+            <div class="tag">
+                Diploma CSE 2025–26 Final Semester
+            </div>
+
+            <h1>
+                Smart <span class="gradient-text">Attendance</span><br>
+                Management System
+            </h1>
+
+            <p>
+                Modern attendance management dashboard for SAM Global University.
+                Track attendance, manage students, analyze reports, and monitor class performance in one powerful
+                platform.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="/login">
+                    <button class="primary-btn">
+                        Launch Dashboard
+                    </button>
+                </a>
+
+                <a href="/reports">
+                    <button class="secondary-btn">
+                        View Reports
+                    </button>
+                </a>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT IMAGE -->
+
+        <div class="hero-right">
+
+            <div class="image-card">
+
+                <!-- ADD YOUR IMAGE PATH HERE -->
+                <img src="{{ url_for('static', filename='images/SAm.jpg') }}" alt="Students">
+
+                <div class="image-overlay">
+                    <h3>SAM Global University</h3>
+                    <p>Attendance Monitoring Portal</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- STATS -->
+
+    <section class="stats">
+
+        <div class="stat-card">
+            <h2>65+</h2>
+            <p>Total Students</p>
+        </div>
+
+        <div class="stat-card">
+            <h2>92%</h2>
+            <p>Attendance Rate</p>
+        </div>
+
+        <div class="stat-card">
+            <h2>15+</h2>
+            <p>Subjects Tracked</p>
+        </div>
+
+        <div class="stat-card">
+            <h2>2026</h2>
+            <p>Final Semester</p>
+        </div>
+
+    </section>
+
+    <!-- FOOTER -->
+
+    <footer>
+        © 2026 SAM Attendance System | Designed for Diploma CSE Final Semester
+    </footer>
+
+</body>
+
+</html>

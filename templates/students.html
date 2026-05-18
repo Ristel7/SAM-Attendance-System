@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Developers</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/icon.png') }}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #0f172a;
+            color: white;
+            min-height: 100vh;
+            padding: 60px;
+        }
+
+        .heading {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .heading h1 {
+            font-size: 50px;
+
+            background: linear-gradient(to right, #38bdf8, #818cf8, #ec4899);
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .heading p {
+            color: #cbd5e1;
+            margin-top: 15px;
+        }
+
+        .team-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            width: 320px;
+            padding: 30px;
+
+            background: rgba(255, 255, 255, 0.08);
+
+            border: 1px solid rgba(255, 255, 255, 0.1);
+
+            border-radius: 30px;
+
+            text-align: center;
+
+            transition: 0.4s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .card img {
+            width: 120px;
+            height: 120px;
+
+            border-radius: 50%;
+
+            object-fit: cover;
+
+            border: 4px solid #38bdf8;
+
+            margin-bottom: 20px;
+        }
+
+        .card h2 {
+            margin-bottom: 10px;
+        }
+
+        .role {
+            color: #38bdf8;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            color: #cbd5e1;
+            line-height: 1.7;
+        }
+
+        .home-btn {
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .home-btn a {
+            text-decoration: none;
+        }
+
+        .home-btn button {
+            padding: 14px 28px;
+
+            border: none;
+
+            border-radius: 14px;
+
+            background: #2563eb;
+
+            color: white;
+
+            cursor: pointer;
+
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="heading">
+
+        <h1>Project Developers</h1>
+
+        <p>
+            SAM Attendance Management System
+        </p>
+
+    </div>
+
+    <div class="team-container">
+
+        <!-- YOU -->
+
+        <div class="card">
+
+            <img src="{{ url_for('static',
+        filename='images/image.png') }}">
+
+            <h2>Priyanshu Rajput</h2>
+
+            <div class="role">
+                Backend Developer
+            </div>
+
+            <p>
+                Developed Flask backend,
+                MySQL integration,
+                attendance logic,
+                and authentication system.
+            </p>
+
+        </div>
+
+        <!-- FRIEND 1 -->
+
+        <div class="card">
+
+            <img src="{{ url_for('static',
+        filename='images/') }}">
+
+            <h2>Student 2</h2>
+
+            <div class="role">
+                Frontend Developer
+            </div>
+
+            <p>
+                Designed UI components,
+                dashboard styling,
+                and responsive layouts.
+            </p>
+
+        </div>
+
+        <!-- FRIEND 2 -->
+
+        <div class="card">
+
+            <img src="{{ url_for('static',
+        filename='images/4.png') }}">
+
+            <h2>Satyam Kumar</h2>
+
+            <div class="role">
+                Bussiness Analyst
+            </div>
+
+            <p>
+                Managed MySQL tables,
+                attendance records,
+                and report generation.
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="home-btn">
+
+        <a href="/">
+
+            <button>
+                Back To Home
+            </button>
+
+        </a>
+
+    </div>
+
+</body>
+
+</html>

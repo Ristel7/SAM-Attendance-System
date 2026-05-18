@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Attendance Analytics Dashboard</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/icon.png') }}">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #0f172a;
+            color: white;
+            padding: 30px;
+        }
+
+        .header {
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #94a3b8;
+            font-size: 18px;
+        }
+
+        .kpi-container {
+
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .kpi-card {
+
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            transition: 0.3s;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .kpi-title {
+            color: #94a3b8;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .kpi-value {
+            font-size: 35px;
+            font-weight: bold;
+        }
+
+        .charts-grid {
+
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .chart-card {
+
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .chart-title {
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+
+        canvas {
+            width: 100% !important;
+            height: 350px !important;
+        }
+
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #94a3b8;
+        }
+
+        @media(max-width:900px) {
+
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="header">
+
+        <h1>Attendance Analytics Dashboard</h1>
+
+        <p>Student attendance reporting and visualization system</p>
+
+    </div>
+
+    <!-- KPI SECTION -->
+
+    <div class="kpi-container">
+
+        <div class="kpi-card">
+
+            <div class="kpi-title">Total Students</div>
+
+            <div class="kpi-value">{{ total_students }}</div>
+
+        </div>
+
+        <div class="kpi-card">
+
+            <div class="kpi-title">Present Today</div>
+
+            <div class="kpi-value">{{ present_today }}</div>
+
+        </div>
+
+        <div class="kpi-card">
+
+            <div class="kpi-title">Absent Today</div>
+
+            <div class="kpi-value">{{ absent_today }}</div>
+
+        </div>
+
+        <div class="kpi-card">
+
+            <div class="kpi-title">Attendance %</div>
+
+            <div class="kpi-value">{{ attendance_percentage }}%</div>
+
+        </div>
+
+    </div>
+
+    <!-- CHART SECTION -->
+
+    <div class="charts-grid">
+
+        <!-- PIE CHART -->
+
+        <div class="chart-card">
+
+            <div class="chart-title">Present vs Absent</div>
+
+            <canvas id="pieChart"></canvas>
+
+        </div>
+
+        <!-- LINE CHART -->
+
+        <div class="chart-card">
+
+            <div class="chart-title">Monthly Attendance Trend</div>
+
+            <canvas id="lineChart"></canvas>
+
+        </div>
+
+    </div>
+
+    <div class="footer">
+
+        Attendance Management System Dashboard
+
+    </div>
+
+    <script>
+
+        // PIE CHART
+
+        const pieLabels = {{ labels | tojson }};
+        const pieValues = {{ values | tojson }};
+
+        new Chart(document.getElementById('pieChart'), {
+
+            type: 'doughnut',
+
+            data: {
+                labels: pieLabels,
+
+                datasets: [{
+                    data: pieValues,
+
+                    backgroundColor: [
+                        '#22c55e',
+                        '#ef4444'
+                    ],
+
+                    borderWidth: 1
+                }]
+            },
+
+            options: {
+                responsive: true,
+
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: 'white',
+                            font: {
+                                size: 14
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // LINE CHART
+
+        const monthLabels = {{ month_labels | tojson }};
+        const monthValues = {{ month_values | tojson }};
+
+        new Chart(document.getElementById('lineChart'), {
+
+            type: 'line',
+
+            data: {
+                labels: monthLabels,
+
+                datasets: [{
+
+                    label: 'Attendance',
+
+                    data: monthValues,
+
+                    borderColor: '#38bdf8',
+
+                    backgroundColor: 'rgba(56,189,248,0.2)',
+
+                    tension: 0.4,
+
+                    fill: true
+                }]
+            },
+
+            options: {
+
+                responsive: true,
+
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: 'white'
+                        }
+                    }
+                },
+
+                scales: {
+                    x: {
+                        ticks: {
+                            color: 'white'
+                        }
+                    },
+
+                    y: {
+                        ticks: {
+                            color: 'white'
+                        }
+                    }
+                }
+            }
+        });
+
+    </script>
+
+</body>
+
+</html>
