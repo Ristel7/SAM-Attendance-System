@@ -98,6 +98,8 @@ def students():
     return render_template("students.html")
 
 # MARK ATTENDANCE
+
+
 @app.route("/mark_attendance/<int:student_id>/<status>")
 def mark_attendance(student_id, status):
 
@@ -140,7 +142,6 @@ def mark_attendance(student_id, status):
     db.commit()
 
     return redirect("/dashboard#attendance-section")
-
 
 
 # ADD STUDENT
@@ -195,13 +196,15 @@ def logout():
     return redirect("/login")
 
 # Report Page
+
+
 @app.route('/reports')
 def reports():
 
     cursor = db.cursor(dictionary=True)
 
     # =========================
-    # TOTAL STUDENTS 
+    # TOTAL STUDENTS
 
     cursor.execute("""
         SELECT COUNT(*) AS total
@@ -316,6 +319,7 @@ def reports():
 
         month_values=month_values
     )
+
 
 if __name__ == "__main__":
     app.run(debug=True)
