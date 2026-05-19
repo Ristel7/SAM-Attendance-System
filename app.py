@@ -1,16 +1,20 @@
 from flask import Flask, render_template, request, redirect, session
 import mysql.connector
+from dotenv import load_dotenv
+import os
 
 app = Flask(__name__)
-app.secret_key = "sam_secret_key"
+load_dotenv()
+
+app.secret_key = os.getenv("SECRET_KEY")
 
 # MYSQL CONNECTION
 db = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="guriya",
-    database="attendance",
-    port=3306
+    host=os.getenv("MYSQL_HOST"),
+    user=os.getenv("MYSQL_USER"),
+    password=os.getenv("MYSQL_PASSWORD"),
+    database=os.getenv("MYSQL_DB"),
+    port=os.getenv("MYSQL_PORT")
 )
 
 cursor = db.cursor(dictionary=True, buffered=True)
