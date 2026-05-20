@@ -95,15 +95,11 @@ def dashboard():
     )
 
 # Students Page
-
-
 @app.route("/students")
 def students():
     return render_template("students.html")
 
 # MARK ATTENDANCE
-
-
 @app.route("/mark_attendance/<int:student_id>/<status>")
 def mark_attendance(student_id, status):
 
@@ -115,10 +111,9 @@ def mark_attendance(student_id, status):
     SELECT * FROM attendance
     WHERE student_id = %s
     AND attendance_date = CURDATE()
+    ORDER BY roll_no DESC
     """
-
     cursor.execute(check_query, (student_id,))
-
     existing = cursor.fetchone()
 
     # if attendance already exists update it
@@ -130,28 +125,22 @@ def mark_attendance(student_id, status):
         WHERE student_id = %s
         AND attendance_date = CURDATE()
         """
-
         cursor.execute(update_query, (status, student_id))
 
     else:
-
         insert_query = """
         INSERT INTO attendance
         (student_id, attendance_date, status)
         VALUES(%s, CURDATE(), %s)
         """
-
         cursor.execute(insert_query, (student_id, status))
-
     db.commit()
-
     return redirect("/dashboard#attendance-section")
 
 
 # ADD STUDENT
 @app.route("/add_student", methods=["POST"])
 def add_student():
-
     roll_no = request.form["roll_no"]
     name = request.form["name"]
 
@@ -160,27 +149,21 @@ def add_student():
     (roll_no, name)
     VALUES(%s, %s)
     """
-
     values = (roll_no, name)
-
     cursor.execute(query, values)
-
     db.commit()
-
     return redirect("/dashboard")
 
 
 # DELETE STUDENT
 @app.route("/delete_student/<int:id>")
 def delete_student(id):
-
     # delete attendance first
     attendance_query = """
     DELETE FROM attendance
     WHERE student_id = %s
     """
     cursor.execute(attendance_query, (id,))
-
     # now delete student
     student_query = """
     DELETE FROM students
@@ -200,16 +183,12 @@ def logout():
     return redirect("/login")
 
 # Report Page
-
-
 @app.route('/reports')
 def reports():
 
     cursor = db.cursor(dictionary=True)
 
-    # =========================
     # TOTAL STUDENTS
-
     cursor.execute("""
         SELECT COUNT(*) AS total
         FROM students
@@ -217,10 +196,7 @@ def reports():
 
     total_students = cursor.fetchone()['total']
 
-    # =========================
     # PRESENT TODAY
-    # =========================
-
     cursor.execute("""
         SELECT COUNT(*) AS total
         FROM attendance
@@ -230,10 +206,7 @@ def reports():
 
     present_today = cursor.fetchone()['total']
 
-    # =========================
     # ABSENT TODAY
-    # =========================
-
     cursor.execute("""
         SELECT COUNT(*) AS total
         FROM attendance
@@ -243,9 +216,7 @@ def reports():
 
     absent_today = cursor.fetchone()['total']
 
-    # =========================
     # ATTENDANCE PERCENTAGE
-    # =========================
 
     total_today = present_today + absent_today
 
@@ -257,10 +228,7 @@ def reports():
     else:
         attendance_percentage = 0
 
-    # =========================
     # PIE CHART DATA
-    # =========================
-
     cursor.execute("""
         SELECT status, COUNT(*) AS total
         FROM attendance
@@ -273,10 +241,7 @@ def reports():
 
     values = [row['total'] for row in pie_data]
 
-    # =========================
     # MONTHLY LINE CHART
-    # =========================
-
     cursor.execute("""
         SELECT
             MONTH(attendance_date) AS month,
