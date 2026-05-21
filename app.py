@@ -264,10 +264,9 @@ def reports():
         for row in line_data
     ]
 
-    # =========================
+   
     # SEND TO HTML
-    # =========================
-
+    
     return render_template(
 
         'reports.html',
