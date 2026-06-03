@@ -2,305 +2,281 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link rel="icon" href="{{ url_for('static', filename='images/icon.png') }}">
+
+    <title>Student Management</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/students.css') }}">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        body {
-            background: #0f172a;
-            color: white;
-            padding: 40px;
-        }
-
-        .heading {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 40px;
-        }
-
-        .heading h1 {
-            font-size: 38px;
-        }
-
-        .logout-btn {
-            padding: 12px 22px;
-            border: none;
-            border-radius: 12px;
-            background: #ef4444;
-            color: white;
-            cursor: pointer;
-        }
-
-        .cards {
-            display: flex;
-            gap: 25px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-        }
-
-        .card {
-            width: 260px;
-            padding: 30px;
-            border-radius: 25px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .card h2 {
-            font-size: 40px;
-            color: #38bdf8;
-        }
-
-        .card p {
-            margin-top: 10px;
-            color: #cbd5e1;
-        }
-
-        .manage-box {
-            background: rgba(255, 255, 255, 0.08);
-            padding: 30px;
-            border-radius: 25px;
-            margin-bottom: 40px;
-        }
-
-        .manage-box h2 {
-            margin-bottom: 20px;
-        }
-
-        .manage-box form {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .manage-box input {
-            padding: 14px;
-            border: none;
-            border-radius: 12px;
-            width: 250px;
-            background: #1e293b;
-            color: white;
-        }
-
-        .add-btn {
-            padding: 14px 20px;
-            border: none;
-            border-radius: 12px;
-            background: #2563eb;
-            color: white;
-            cursor: pointer;
-        }
-
-        .table-box {
-            background: rgba(255, 255, 255, 0.08);
-            padding: 30px;
-            border-radius: 25px;
-            overflow-x: auto;
-        }
-
-        .table-box h2 {
-            margin-bottom: 25px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        table th {
-            background: #1e293b;
-            padding: 18px;
-            text-align: left;
-        }
-
-        table td {
-            padding: 18px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .present-btn,
-        .absent-btn,
-        .delete-btn {
-            padding: 10px 16px;
-            border: none;
-            border-radius: 10px;
-            color: white;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .present-btn {
-            background: #22c55e;
-        }
-
-        .absent-btn {
-            background: #ef4444;
-        }
-
-        .delete-btn {
-            background: #f97316;
-        }
-
-        .actions {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-    </style>
 </head>
 
 <body>
 
-    <div class="heading">
+    <div class="container">
 
-        <h1>SAM Attendance Dashboard</h1>
+        <!-- SIDEBAR -->
 
-        <p>
-            Today's Date:
-            <span id="today-date"></span>
-        </p>
+        <aside class="sidebar">
 
-        <a href="/logout">
-            <button class="logout-btn">
-                Logout
-            </button>
-        </a>
+            <div class="logo">
+
+                <h2>SAM</h2>
+
+                <p>Attendance System</p>
+
+            </div>
+
+            <nav>
+
+                <a href="/dashboard">Dashboard</a>
+
+                <a href="/students" class="active">
+                    Students
+                </a>
+
+                <a href="/reports">
+                    Reports
+                </a>
+
+                <a href="/logout">
+                    Logout
+                </a>
+
+            </nav>
+
+        </aside>
+
+        <!-- MAIN -->
+
+        <main class="main-content">
+
+            <!-- TOP BAR -->
+
+            <div class="topbar">
+
+                <div>
+
+                    <h1>Student Management</h1>
+
+                    <p>
+                        Manage all students and attendance
+                    </p>
+
+                </div>
+
+                <div class="search-box">
+
+                    <input type="text" placeholder="Search Student...">
+
+                </div>
+
+            </div>
+
+            <!-- STATS -->
+
+            <div class="stats">
+            
+                <div class="card">
+            
+                    <h2>{{ total_students.total }}</h2>
+            
+                    <p>Total Students</p>
+            
+                </div>
+            
+                <div class="card">
+            
+                    <h2>{{ present_today.present }}</h2>
+            
+                    <p>Present Today</p>
+            
+                </div>
+            
+                <div class="card">
+            
+                    <h2>{{ absent_today.absent }}</h2>
+            
+                    <p>Absent Today</p>
+            
+                </div>
+            
+                <div class="card">
+            
+                    <h2>{{ percentage }}%</h2>
+            
+                    <p>Attendance Rate</p>
+            
+                </div>
+            
+            </div>
+
+            <!-- ADD STUDENT -->
+
+            <div class="action-bar">
+
+                <button class="add-btn" onclick="openModal()">
+
+                    Add Student
+
+                </button>
+
+            </div>
+
+            <!-- TABLE -->
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>ID</th>
+
+                            <th>Roll No</th>
+
+                            <th>Name</th>
+
+                            <th>Attendance</th>
+
+                            <th>Manage</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for student in students %}
+
+                        <tr>
+
+                            <td>
+                                {{ student.id }}
+                            </td>
+
+                            <td>
+                                {{ student.roll_no }}
+                            </td>
+
+                            <td>
+                                {{ student.name }}
+                            </td>
+
+                            <td>
+
+                                <div class="attendance-buttons">
+
+                                    <a href="/mark_attendance/{{ student.id }}/Present">
+
+                                        <button class="present-btn">
+
+                                            Present
+
+                                        </button>
+
+                                    </a>
+
+                                    <a href="/mark_attendance/{{ student.id }}/Absent">
+
+                                        <button class="absent-btn">
+
+                                            Absent
+
+                                        </button>
+
+                                    </a>
+
+                                </div>
+
+                            </td>
+
+                            <td>
+
+                                <a href="/delete_student/{{ student.id }}">
+
+                                    <button class="delete-btn">
+
+                                        Remove
+
+                                    </button>
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </main>
 
     </div>
 
-    <div class="cards">
+    <!-- MODAL -->
 
-        <div class="card">
-            <h2>{{ total_students.total }}</h2>
-            <p>Total Students</p>
+    <div id="studentModal" class="modal">
+
+        <div class="modal-content">
+
+            <h2>Add Student</h2>
+
+            <form action="/add_student" method="POST">
+
+                <input type="text" name="roll_no" placeholder="Roll Number" required>
+
+                <input type="text" name="name" placeholder="Student Name" required>
+
+                <button type="submit">
+
+                    Add Student
+
+                </button>
+
+            </form>
+
         </div>
 
-        <div class="card">
-            <h2>Diploma CSE</h2>
-            <p>2025-26 Final Sem</p>
-        </div>
-
-        <div class="card">
-            <h2>{{ present_count.present_count }}</h2>
-            <p>Present Today</p>
-        </div>
-        
-        <!-- <div class="card">
-            <h2>{{ absent_count.absent_count }}</h2>
-            <p>Absent Today</p>
-        </div> -->
-
     </div>
 
-    <!-- ADD STUDENT -->
+    <script>
 
-    <div class="manage-box">
+        function openModal() {
 
-        <h2>Manage Students</h2>
+            document
+                .getElementById("studentModal")
+                .style.display = "flex";
 
-        <form action="/add_student" method="POST">
-
-            <input type="text" name="roll_no" placeholder="Enter Roll No" required>
-
-            <input type="text" name="name" placeholder="Enter Student Name" required>
-
-            <button class="add-btn">
-                Add Student
-            </button>
-
-        </form>
-
-    </div>
-
-    <!-- STUDENT TABLE -->
-
-    <div class="table-box" id="attendance-section">
-
-        <h2>Student Attendance List</h2>
-
-        <table>
-
-            <tr>
-                <th>ID</th>
-                <th>Roll No</th>
-                <th>Name</th>
-                <th>Attendance</th>
-                <th>Manage</th>
-            </tr>
-
-            {% for student in students %}
-
-            <tr>
-
-                <td>{{ student.id }}</td>
-
-                <td>{{ student.roll_no }}</td>
-
-                <td>{{ student.name }}</td>
-
-                <td>
-
-                    <div class="actions">
-
-                        <a href="/mark_attendance/{{ student.id }}/Present" class="present-btn">
-                            Present
-                        </a>
-
-                        <a href="/mark_attendance/{{ student.id }}/Absent" class="absent-btn">
-                            Absent
-                        </a>
-
-                    </div>
-
-                </td>
-
-                <td>
-
-                    <a href="/delete_student/{{ student.id }}" class="delete-btn">
-                        Remove
-                    </a>
-
-                </td>
-
-            </tr>
-
-            {% endfor %}
-
-        </table>
-
-    </div>
-<script>
-
-    const today = new Date()
-
-    const formattedDate = today.toLocaleDateString(
-        'en-IN',
-        {
-            weekday: 'long',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
         }
-    )
 
-    document.getElementById("today-date").innerHTML = formattedDate
+        window.onclick = function (event) {
 
-</script>
+            let modal =
+                document.getElementById("studentModal");
+
+            if (event.target == modal) {
+
+                modal.style.display = "none";
+
+            }
+
+        }
+
+    </script>
 
 </body>
 

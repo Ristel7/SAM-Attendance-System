@@ -1,7 +1,10 @@
-from flask import Flask, render_template, request, redirect, session
-import mysql.connector
-from dotenv import load_dotenv
 import os
+import mysql.connector
+from datetime import date
+from flask import Flask, render_template, request, redirect, session
+from dotenv import load_dotenv
+
+
 
 app = Flask(__name__)
 load_dotenv()
@@ -86,13 +89,50 @@ def dashboard():
 
     absent_count = cursor.fetchone()
 
+    # total students
+    cursor.execute("SELECT COUNT(*) AS total FROM students")
+    total_students = cursor.fetchone()
+
+    # present today
+    cursor.execute("""
+    SELECT COUNT(*) AS present
+    FROM attendance
+    WHERE attendance_date = CURDATE()
+    AND status = 'Present'
+    """)
+
+    present_today = cursor.fetchone()
+
+    # absent today
+    cursor.execute("""
+    SELECT COUNT(*) AS absent
+    FROM attendance
+    WHERE attendance_date = CURDATE()
+    AND status = 'Absent'
+    """)
+
+    absent_today = cursor.fetchone()
+
+    # attendance percentage
+    total = total_students["total"]
+
+    if total > 0:
+        percentage = round(
+            (present_today["present"] / total) * 100,
+            1
+        )
+    else:
+        percentage = 0
+
     return render_template(
         "dashboard.html",
         total_students=total_students,
-        students=students,
-        present_count=present_count,
-        absent_count=absent_count
+        present_today=present_today,
+        absent_today=absent_today,
+        percentage=percentage,
+        students=students
     )
+
 
 # Students Page
 @app.route("/students")
@@ -111,7 +151,6 @@ def mark_attendance(student_id, status):
     SELECT * FROM attendance
     WHERE student_id = %s
     AND attendance_date = CURDATE()
-    ORDER BY roll_no DESC
     """
     cursor.execute(check_query, (student_id,))
     existing = cursor.fetchone()
