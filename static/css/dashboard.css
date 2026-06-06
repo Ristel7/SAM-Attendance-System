@@ -96,19 +96,26 @@ nav .active {
 
 }
 
-.search-box input {
+.class-badge {
 
-    width: 320px;
+    background:
+        rgba(255, 255, 255, .05);
 
-    padding: 14px;
+    backdrop-filter:
+        blur(20px);
 
-    border: none;
+    border:
+        1px solid rgba(255, 255, 255, .08);
 
-    border-radius: 12px;
+    color: #cbd5e1;
 
-    background: #111827;
+    padding: 12px 24px;
 
-    color: white;
+    border-radius: 50px;
+
+    font-size: 14px;
+
+    font-weight: 600;
 
 }
 
