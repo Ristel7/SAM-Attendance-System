@@ -1,2 +1,58 @@
-# 🎓 SAM Attendance Management System ### *A Next-Gen, Glassmorphism-Inspired Digital Classroom Attendance Platform*     []() *Developed with ❤️ for the **Diploma CSE 2025–26 Final Semester Project** at **SAM Global University***
---- ## 🧭 Table of Contents - [✨ Overview](#-overview) - [🎯 Objectives & Problem Statement](#-objectives--problem-statement) - [🌟 Key Features](#-key-features) - [🛠️ Tech Stack & Architecture](#️-tech-stack--architecture) - [📂 Project Structure](#-project-structure) - [🚀 Getting Started & Installation](#-getting-started--installation) - [📸 Preview & Dashboard](#-preview--dashboard) --- ## ✨ Overview The **SAM Attendance Management System** is a modern, web-based application built to completely replace traditional, paper-based, error-prone attendance tracking methods with a blazing-fast, interactive, and centralized digital experience. Designed with a stunning **glassmorphism-inspired UI**, it empowers faculty members to handle attendance workflows effortlessly while maintaining historical accuracy securely in a backend database. --- ## 🎯 Objectives & Problem Statement ### ❌ The Problem Traditional classroom attendance tracking suffers from: * Highly **time-consuming** manual roll calls. * Clunky **paper-based registers** prone to damage or loss. * Tedious **record maintenance** and high risk of human error. ### ✅ Our Solution * **Digitize** classroom attendance from end to end. * **Eliminate** redundant manual work and speed up daily routines. * **Maintain** robust attendance history securely. * **Provide** an intuitive, professional academic management interface. --- ## 🌟 Key Features | Feature Category | Description | | :--- | :--- | | **🔐 Secure Authentication** | Session-protected teacher login/logout portals ensuring unauthorized users cannot access class dashboards. | | **👨‍🎓 Student Lifecycle Management** | Dynamic management tool allowing teachers to add, remove, and view complete student directory lists. | | **📅 Date-Wise Tracking** | Daily marking system categorizing students into **Present** or **Absent** synced live with MySQL. | | **📊 Live Analytics Dashboard** | Real-time calculation of total students, present today, absent today, and dynamic tracking metrics. | | **🎨 Cutting-Edge UI/UX** | Built using modern CSS glassmorphism, gradient effects, responsive cards, and clean typography. | --- ## 🛠️ Tech Stack & Architecture This platform utilizes a powerful, lightweight full-stack ecosystem: * **Frontend:** HTML5, CSS3 (Glassmorphism Effects), Modern JavaScript, Responsive Flexbox/Grid Layouts. * **Backend:** Python 🐍, Flask Microframework (Routing, Session Management, Server Logic). * **Database:** MySQL 🐬 (Relational Schema for Teacher credentials, Student profiles, and Date-wise attendance logs). ```text [ HTML / CSS / JS Frontend ] │ (HTTP Requests / Forms) ▼ [ Python Flask Backend ] │ (SQL Queries / ORM logic) ▼ [ MySQL Database Server ] ``` --- ## 📂 Project Structure ```text 📁 SAM-Attendance-Management-System/ │ ├── 📁 static/ │ ├── 📁 css/ # Glassmorphic stylesheets & custom gradients │ ├── 📁 js/ # Frontend interactivity & validation scripts │ └── 📁 images/ # UI assets and logos │ ├── 📁 templates/ │ ├── login.html # Secure teacher authentication portal │ ├── dashboard.html # Live analytics & statistics hub │ ├── students.html # Student management interface │ └── attendance.html # Date-wise tracking sheet │ ├── app.py # Main Flask server configuration & routes ├── database.sql # MySQL schema and initial setup queries ├── requirements.txt # Python dependencies list └── README.md # Project documentation ``` --- ## 🚀 Getting Started & Installation Follow these instructions to set up and run the project locally on your machine. ### Prerequisites * Python `3.x` installed on your system. * MySQL Server installed and running locally (e.g., via XAMPP or MySQL Workbench). ### Step 1: Clone or Download the Repository ```bash git clone https://github.com/your-username/sam-attendance-system.git cd sam-attendance-system ``` ### Step 2: Install Python Dependencies ```bash pip install -r requirements.txt ``` *(Or manually install Flask and MySQL connector: `pip install flask mysql-connector-python`)* ### Step 3: Configure the Database 1. Open your MySQL client (phpMyAdmin, MySQL Shell, etc.). 2. Create a new database named `sam_attendance_db`: ```sql CREATE DATABASE sam_attendance_db; ``` 3. Import the table structures using the provided schema or configuration in `database.sql`. 4. Update your database credentials (host, user, password) inside `app.py`. ### Step 4: Run the Application ```bash python app.py ``` Open your web browser and navigate to: 👉 `http://127.0.0.1:5000` --- ## 📝 License & Academic Acknowledgement Developed as part of the **Diploma Computer Science & Engineering (CSE) 2025–26 Final Semester** curriculum at **SAM Global University**.
+# 🎓 SAM Attendance Management System
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.x-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
+  <img src="https://img.shields.io/badge/Flask-Web%20Framework-000000?style=for-the-badge&logo=flask&logoColor=white" alt="Flask">
+  <img src="https://img.shields.io/badge/MySQL-Database-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL">
+  <img src="https://img.shields.io/badge/HTML5-Frontend-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5">
+  <img src="https://img.shields.io/badge/CSS3-Styling-1572B6?style=for-the-badge&logo=css3&logoColor=white" alt="CSS3">
+  <img src="https://img.shields.io/badge/JavaScript-Interactive-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript">
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/github/last-commit/Ristel7/SAM-Attendance-System?style=flat-square&color=7c3aed" alt="Last Commit">
+  <img src="https://img.shields.io/github/commit-activity/m/Ristel7/SAM-Attendance-System?style=flat-square&color=2563eb" alt="Commit Activity">
+  <img src="https://img.shields.io/github/repo-size/Ristel7/SAM-Attendance-System?style=flat-square&color=059669" alt="Repo Size">
+  <img src="https://img.shields.io/github/license/Ristel7/SAM-Attendance-System?style=flat-square&color=f59e0b" alt="License">
+</p>
+
+<p align="center">
+  <b>📚 A web-based student attendance management system built for academic use.</b>
+</p>
+
+<p align="center">
+  <i>Digitizing daily attendance, student management and attendance reporting with Flask and MySQL.</i>
+</p>
+
+---
+
+## 🌟 Overview
+
+**SAM Attendance Management System** is a web-based attendance application developed to simplify the process of managing student attendance in an academic environment.
+
+The system provides a centralized interface where a teacher can log in, view students, mark attendance, manage student records and review attendance reports.
+
+Instead of relying on manual registers or scattered records, the application stores attendance information in a **MySQL relational database** and uses a **Flask backend** to process requests and generate dynamic dashboard and report data.
+
+The project was developed as an academic project for the **Diploma Computer Science & Engineering 2025–26 Final Semester at SAM Global University**.
+
+---
+
+## ✨ Why This Project?
+
+Traditional attendance management can become repetitive and difficult to maintain when records grow over time.
+
+### ❌ Traditional Approach
+
+```text
+Manual Register
+      ↓
+Roll Call
+      ↓
+Write Attendance
+      ↓
+Calculate Statistics
+      ↓
+Maintain Records
+      ↓
+Prepare Reports
